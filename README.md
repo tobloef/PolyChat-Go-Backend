@@ -15,6 +15,4 @@ This repository contains the Go version of the PolyChat backend. It uses the ???
 
 [PolyChat Node.js Backend](https://github.com/tobloef/PolyChat-Node.js-Backend)
 
-[PolyChat Go Backend](https://github.com/tobloef/PolyChat-Go-Backend)
-
 [PolyChat Elixir Backend](https://github.com/tobloef/PolyChat-Elixir-Backend)

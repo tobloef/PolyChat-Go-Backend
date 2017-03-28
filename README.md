@@ -4,8 +4,17 @@ PolyChat is a simple chat application with multiple backends, each written in a 
 I'm already fairly familiar with Node.js and I'm mainly including it as a basis for comparison. I haven't used Go or Elixir before this project, so I'm also using this an opportunity to learn the basics of these languages.
 
 ## PolyChat Go Backend
-This repository contains the Go version of the PolyChat backend. It uses the standard ??? library (I don't currently know, will update when I've figured it out) for the web server and ??? (same as before) for the real-time communication. The backend exposes a number of REST API endpoints, all of which are described in the table below:
+This repository contains the Go version of the PolyChat backend. It uses the ??? library (I don't currently know, will update when I've figured it out) for the web server and ??? (same as before) for the real-time communication. The backend exposes a number of REST API endpoints, all of which are described in the table below:
 
 | HTTP Method | URL        | Description                     |
 |-------------|------------|---------------------------------|
 |             |            |                                 |
+
+## The other repositories
+[PolyChat Frontend](https://github.com/tobloef/PolyChat-Frontend)
+
+[PolyChat Node.js Backend](https://github.com/tobloef/PolyChat-Node.js-Backend)
+
+[PolyChat Go Backend](https://github.com/tobloef/PolyChat-Go-Backend)
+
+[PolyChat Elixir Backend](https://github.com/tobloef/PolyChat-Elixir-Backend)

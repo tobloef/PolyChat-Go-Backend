@@ -46,18 +46,18 @@ func connect(w http.ResponseWriter, r *http.Request) {
 			case "connect":
 				connectEvent(conn, data)
 			case "message":
-				var chatMessage Message
-				err = json.Unmarshal([]byte(data), &chatMessage)
-				if (err != nil) {
-					fmt.Printf("Error unmarshaling chat message\n%v\n", err)
+				if client, ok := clients[conn]; ok {
+					chatMessage := Message{
+						client.Nickname,
+						data,
+					}
+					messageEvent(conn, chatMessage)
 				}
-				messageEvent(conn, chatMessage)
 		}
 	}
 }
 
 func connectEvent(conn *websocket.Conn, nickname string) {
-
 	if !nicknameAvailable(nickname) {
 		event := Event{
 			"connectResponse",

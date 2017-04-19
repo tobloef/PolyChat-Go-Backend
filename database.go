@@ -21,7 +21,7 @@ func executeQuery(query string, values []string) (string, error) {
 }
 
 func insertMessage(message Message) (error) {
-	fmt.Printf("Fake inserting message:\n%v: %v\n", message.Nickname, message.Content)
+	fmt.Printf("%v: %v\n", message.Nickname, message.Content)
 	return nil
 }
 

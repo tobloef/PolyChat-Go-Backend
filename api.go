@@ -38,7 +38,6 @@ func messages(w http.ResponseWriter, r *http.Request) {
 	if (err != nil) {
 		w.WriteHeader(http.StatusInternalServerError)
 		w.Write([]byte("Server error: Couldn't convert messages to JSON"))
-		fmt.Println(err.Error())
 		return
 	}
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")

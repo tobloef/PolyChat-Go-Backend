@@ -4,29 +4,33 @@ import (
 	"fmt"
 )
 
-func open() (error) {
-	fmt.Printf("Fake opening the database connection.")
+func openDatabase() (error) {
+	fmt.Printf("Fake opening the database connection.\n")
 	return nil
 }
 
-func close() (error) {
-	fmt.Printf("Fake closing the database connection.")
+func closeDatabase() (error) {
+	fmt.Printf("Fake closing the database connection.\n")
 	return nil
 }
 
 //							 not []string VVV      VVV not string
 func executeQuery(query string, values []string) (string, error) {
-	fmt.Printf("Fake executing query:\n%v", query)
+	fmt.Printf("Fake executing query:\n%v\n", query)
 	return "", nil
 }
 
 func insertMessage(message Message) (error) {
-	fmt.Printf("Fake inserting message:\n%v: %v", message.Nickname, message.Content)
+	fmt.Printf("Fake inserting message:\n%v: %v\n", message.Nickname, message.Content)
 	return nil
 }
 
+func insertUser(nickname string) (int, error) {
+	fmt.Printf("Fake inserting user with nickname %v\n", nickname)
+	return 0, nil
+}
+
 func getMessages(amount int) ([]Message, error) {
-	fmt.Printf("Fake getting the newest %v messages.", amount)
 	messages := []Message{
 		Message{
 			"Lukas",
@@ -47,5 +51,6 @@ func getMessages(amount int) ([]Message, error) {
 		}
 		messages = messages[:amount]
 	}
+	fmt.Printf("Fake getting the newest %v messages.\n", len(messages))
 	return messages, nil
 }

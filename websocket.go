@@ -1,11 +1,12 @@
 package main
 
 import (
-	"github.com/gorilla/websocket"
-	"net/http"
 	"encoding/json"
-	"reflect"
 	"fmt"
+	"net/http"
+	"reflect"
+
+	"github.com/gorilla/websocket"
 )
 
 var upgrader = websocket.Upgrader{
@@ -33,7 +34,7 @@ func connect(w http.ResponseWriter, r *http.Request) {
 		}
 		var event Event
 		err = json.Unmarshal(message, &event)
-		if (err != nil) {
+		if err != nil {
 			fmt.Printf("Error unmarshaling event\n%v\n", err)
 			continue
 		}
@@ -43,16 +44,16 @@ func connect(w http.ResponseWriter, r *http.Request) {
 			continue
 		}
 		switch event.Type {
-			case "connect":
-				connectEvent(conn, data)
-			case "message":
-				if client, ok := clients[conn]; ok {
-					chatMessage := Message{
-						client.Nickname,
-						data,
-					}
-					messageEvent(conn, chatMessage)
+		case "connect":
+			connectEvent(conn, data)
+		case "message":
+			if client, ok := clients[conn]; ok {
+				chatMessage := Message{
+					client.Nickname,
+					data,
 				}
+				messageEvent(conn, chatMessage)
+			}
 		}
 	}
 }
@@ -67,7 +68,7 @@ func connectEvent(conn *websocket.Conn, nickname string) {
 		return
 	}
 	id, err := insertUser(nickname)
-	if (err != nil) {
+	if err != nil {
 		event := Event{
 			"connectResponse",
 			"error",
@@ -97,7 +98,7 @@ func connectEvent(conn *websocket.Conn, nickname string) {
 		nickname,
 	}
 	for connKey := range clients {
-		if (conn != connKey) {
+		if conn != connKey {
 			sendEvent(connKey, event)
 		}
 	}
@@ -109,16 +110,20 @@ func messageEvent(conn *websocket.Conn, message Message) {
 		message,
 	}
 	for connKey := range clients {
-		if (conn != connKey) {
+		if conn != connKey {
 			sendEvent(connKey, event)
 		}
 	}
-	insertMessage(message)
+	fmt.Printf("%v: %v\n", clients[conn].Nickname, message.Content)
+	err := insertMessage(clients[conn].Id, message.Content)
+	if err != nil {
+		fmt.Printf("%v\n", err)
+	}
 }
 
-func nicknameAvailable(nickname string) (bool) {
+func nicknameAvailable(nickname string) bool {
 	for _, client := range clients {
-		if (client.Nickname == nickname) {
+		if client.Nickname == nickname {
 			return false
 		}
 	}
@@ -151,10 +156,10 @@ func sendEvent(conn *websocket.Conn, event Event) {
 	eventJson, err := json.Marshal(event)
 	if err != nil {
 		fmt.Printf("Error marshaling event\n%v\n", err)
-		return;
+		return
 	}
 	err = conn.WriteMessage(websocket.TextMessage, eventJson)
-	if (err != nil) {
+	if err != nil {
 		fmt.Printf("Error writing message\n%v\n", err)
 		return
 	}
